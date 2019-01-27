@@ -1,0 +1,252 @@
+---
+title: "html_document"
+author: LAKAMSANI VINAY VIHARI
+date: 09/6/2018
+output: html_notebook
+---
+
+
+# reading the two files and saving the tables
+
+```{r}
+# setwd("C:/Users/5559/Desktop/StackkkoverFlow")
+st_old = data.frame(read.table(file = "Data/old.csv" , sep = ",", header = TRUE))
+st_new = data.frame(read.table(file = "Data/new.csv" , sep = ",", header = TRUE))
+
+st_old
+
+```
+
+#comparing
+
+```{r}
+
+cou = c(1,100,by=1)
+
+cou_det=c(1,100,by=1)
+
+rep = 0;
+cxt=0;
+
+for(ix in st_old$Id){
+  
+  for(iy in st_new$Id){
+    if(ix==iy){
+      rep = rep+1;
+      cou_det[ix] = ix;
+      cxt
+      cat("in the for loop",rep)
+    }
+     
+    cxt= cxt+1
+  }
+}
+
+rep
+
+#cou_det
+
+```
+
+
+# getting people performance value
+```{r}
+
+cou = c(1,100,by=1)
+
+cou_det=c(1,100,by=1)
+
+rep = 0;
+cxt=0;
+
+for(ix in st_old$Id){
+  
+  for(iy in st_new$Id){
+    if(ix==iy){
+      rep = rep+1;
+      cou_det[cxt] = ix;
+      cxt= cxt+1
+      
+    }
+     
+    
+  }
+}
+
+rep
+
+cou_det
+
+
+
+for(iz in cou){
+  
+  for(im in st_new$Id){
+      if(im==iz){
+        
+      }
+    
+  }
+  
+
+  
+}
+
+
+
+
+```
+
+
+# comparing using the compare
+```{r}
+#install.packages("compare")
+
+library(compare)
+
+comparison <- compare(st_new,st_old,allowAll=TRUE)
+comparison$Id
+
+
+
+```
+
+
+
+#using sql
+```{r}
+require(sqldf)
+
+new_type <- sqldf('SELECT Id,DisplayName,final_score,1 as ty FROM st_new')
+
+old_type <- sqldf('SELECT Id,DisplayName,final_score,2 as ty FROM st_old')
+
+new_type
+
+```
+
+
+#comparing in terms of graph
+```{r}
+
+new_type
+
+plot(new_type$Id,new_type$final_score)
+
+
+
+```
+
+#importing all the tables
+```{r}
+
+require(sqldf)
+
+st_wk2 = data.frame(read.table(file = "Data/week2.csv" , sep = ",", header = TRUE))
+st_wk3 = data.frame(read.table(file = "Data/week3.csv" , sep = ",", header = TRUE))
+st_wk4 = data.frame(read.table(file = "Data/week4.csv" , sep = ",", header = TRUE))
+st_wk5 = data.frame(read.table(file = "Data/week5.csv" , sep = ",", header = TRUE))
+
+
+st_wk2_m <- sqldf('SELECT Id,DisplayName,final_score,2 as ty FROM st_wk2')
+
+st_wk3_m <- sqldf('SELECT Id,DisplayName,final_score,3 as ty FROM st_wk3')
+
+st_wk4_m <- sqldf('SELECT Id,DisplayName,final_score,4 as ty FROM st_wk4')
+
+st_wk5_m <- sqldf('SELECT Id,DisplayName,final_score,5 as ty FROM st_wk5')
+
+
+
+
+wekk_1_5= cbind(st_wk2_m,st_wk3_m,st_wk4_m,st_wk5_m)
+
+
+week_2_3_common = vector(,100)
+week_3_4_common = vector(,100)
+week_4_5_common = vector(,100)
+week_2_3_4_5_common = vector(,100)
+cu=0
+
+# for week 2 and week 3
+for(ih in st_wk2_m$Id ){
+  
+  for(ip in st_wk3_m$Id)
+  
+  if(ih==ip){
+    
+    week_2_3_common[cu]=ih
+    cu=cu+1
+    
+  }
+}
+
+week_2_3_common
+
+
+cu=0
+
+
+# for week 3 and week 4
+for(ih in st_wk3_m$Id ){
+  
+  for(ip in st_wk4_m$Id)
+  
+  if(ih==ip){
+    
+    week_3_4_common[cu]=ih
+    cu=cu+1
+    
+  }
+}
+
+week_3_4_common
+
+cu=0
+
+
+# for week 4 and week 5
+for(ih in st_wk4_m$Id ){
+  
+  for(ip in st_wk5_m$Id)
+  
+  if(ih==ip){
+    
+    week_4_5_common[cu]=ih
+    cu=cu+1
+    
+  }
+}
+
+week_4_5_common
+
+cu=0
+
+# for week 2 and week 3 and week 4 and week 5
+for(ih in week_2_3_common ){
+  
+  for(ip in week_4_5_common)
+  
+  if(ih==ip){
+    
+    week_2_3_4_5_common[cu]=ih
+    cu=cu+1
+    
+  }
+}
+
+
+week_2_3_4_5_common
+
+
+```
+
+
+#
+
+
+
+
+
+
+
